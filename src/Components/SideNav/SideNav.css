@@ -1,0 +1,16 @@
+a {
+    display: flex;
+    gap: 1.5rem;
+    width: 40%;
+    margin: auto;
+  }
+  a span{
+    width: 10px;
+  }
+
+  .icons{
+    font-size: 30px;
+    line-height: 36px;
+    padding: 12px;
+    border-radius: 8px;
+  }
