@@ -1,16 +1,31 @@
 a {
-    display: flex;
-    gap: 1.5rem;
-    width: 40%;
-    margin: auto;
-  }
-  a span{
-    width: 10px;
+  display: flex;
+  gap: 1.5rem;
+  width: 40%;
+  margin: auto;
+}
+
+a span {
+  width: 10px;
+}
+
+
+@media screen and (max-width:1024px) {
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 
-  .icons{
-    font-size: 30px;
-    line-height: 36px;
-    padding: 12px;
-    border-radius: 8px;
+  .slide-in {
+    animation: slideIn 0.9s ease-in-out forwards;
   }
+
+}
