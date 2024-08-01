@@ -11,21 +11,21 @@ const Cart = ({ data, handleDelete }) => {
     const { user, handleViewDetails} = useContext(AuthContext)
  const [num, setNum] = useState(heartCount)
 
-    const handleLove = id => {
-        const updatedText = document.getElementById('count').innerText;
-        console.log(heartCount, id)
+    const handleLove = (id) => {
+        const updatedText = document.getElementById(_id).innerText;
+        console.log(heartCount, _id)
         fetch(`http://localhost:5000/portfolio/${id}`,{
             method:'PATCH',
             headers:{
                 'content-type':'application/json'
             },
-            body:JSON.stringify({updatedText, status:true})
+            body:JSON.stringify({updatedText})
         })
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
                     setNum( num + 1 )
-                    const btn = document.getElementById('heart-btn')
+                    const btn = document.getElementById(_id + 1)
                     btn.disabled = true;
                     btn.classList.add('red')
                 }
@@ -42,7 +42,7 @@ const Cart = ({ data, handleDelete }) => {
             </figure>
             <div className="flex justify-between m-2">
                 <p>DEVELOPMENT</p>
-                <p><button id="heart-btn" className="hover:cursor-pointer" onClick={() => handleLove(_id)}><FontAwesomeIcon icon={faHeart} /></button> <span id="count">{num}</span></p>
+                <p><button id={_id + 1} className="hover:cursor-pointer" onClick={() => handleLove(_id)}><FontAwesomeIcon icon={faHeart} /></button> <span id={_id}>{num}</span></p>
             </div>
             <h2 className="text-2xl font-semibold mx-2">{title}</h2>
             <small className={`w-full h-10 px-2 ${description.length > 50 && 'overflow-hidden'}`}>{description}</small>
