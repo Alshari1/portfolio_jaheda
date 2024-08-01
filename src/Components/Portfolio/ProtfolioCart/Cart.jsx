@@ -4,46 +4,53 @@ import { faHeart, faEye, faPenFancy, faTrash } from '@fortawesome/free-solid-svg
 // import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import './Cart.css'
 import { AuthContext } from "../../Providres/AuthProviders";
-import { useNavigate } from "react-router-dom";
 
-const Cart = ({data}) => {
-    console.log(data.description.length)
-    const {description, title} = data
-    const { user } = useContext(AuthContext)
-    const [num, setNum] = useState(400)
-    const navigate = useNavigate()
-    const handleLove = () => {
-        console.log('Clicked')
-        const previousStr = document.getElementById('count').innerText
-        const previousNum = parseInt(previousStr)
-        const currentNum = previousNum + 1;
-        setNum(currentNum)
-        const btn = document.getElementById('heart-btn')
-        btn.disabled = true;
-        btn.classList.add('red')
-        //   console.log(btn)
+
+const Cart = ({ data, handleDelete }) => {
+    const { description, title, thumbnailUrl, _id, heartCount } = data
+    const { user, handleViewDetails} = useContext(AuthContext)
+ const [num, setNum] = useState(heartCount)
+
+    const handleLove = id => {
+        const updatedText = document.getElementById('count').innerText;
+        console.log(heartCount, id)
+        fetch(`http://localhost:5000/portfolio/${id}`,{
+            method:'PATCH',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify({updatedText, status:true})
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    setNum( num + 1 )
+                    const btn = document.getElementById('heart-btn')
+                    btn.disabled = true;
+                    btn.classList.add('red')
+                }
+            })
+            .catch(err => console.log(err))
 
     }
 
-    const handleViewDetails = () => {
-        navigate('/details')
-    }
+
     return (
-        <div className=" flex flex-col flex-wrap space-y-5 bg-base-100 w-80  shadow-xl border rounded-lg py-3">
+        <div className=" flex flex-col flex-wrap space-y-5 bg-base-100 w-80  shadow-xl border rounded-lg pb-3">
             <figure className="p-5 ">
-                <img className="rounded-lg" src="./../../../public/Pierre Gagnaire.jpeg" alt="" />
+                <img className=" rounded-lg max-h-56 w-full" src={thumbnailUrl} alt="image" />
             </figure>
             <div className="flex justify-between m-2">
                 <p>DEVELOPMENT</p>
-                <p><button id="heart-btn" className="hover:cursor-pointer" onClick={handleLove}><FontAwesomeIcon icon={faHeart} /></button> <span id="count">{num}</span></p>
+                <p><button id="heart-btn" className="hover:cursor-pointer" onClick={() => handleLove(_id)}><FontAwesomeIcon icon={faHeart} /></button> <span id="count">{num}</span></p>
             </div>
             <h2 className="text-2xl font-semibold mx-2">{title}</h2>
             <small className={`w-full h-10 px-2 ${description.length > 50 && 'overflow-hidden'}`}>{description}</small>
-            {user === 'admin' ? <div className="flex justify-between px-4">
+            {user !== 'admin' ? <div className="flex justify-between px-4">
                 <FontAwesomeIcon icon={faEye} />
                 <FontAwesomeIcon icon={faPenFancy} />
-                <FontAwesomeIcon icon={faTrash} />
-            </div> : <div className="flex justify-start px-3"><FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleViewDetails()} icon={faEye} /></div>}
+                <FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleDelete(_id)} icon={faTrash} />
+            </div> : <div className="flex justify-start px-3"><FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleViewDetails(_id)} icon={faEye} /></div>}
         </div>
     );
 };
