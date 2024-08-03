@@ -11,51 +11,53 @@ const Portfolio = () => {
   useEffect(() => {
     fetch('http://localhost:5000/portfolio')
       .then(res => res.json())
-      .then(data => setInfo(data))
+      .then(data => {
+        setInfo(data)
+      })
       .catch(err => console.error(err))
   }, [])
 
   const handleDelete = id => {
     fetch(`http://localhost:5000/portfolio/${id}`, {
-        method: 'DELETE'
+      method: 'DELETE'
     })
-        .then(res => res.json())
-        .then(data => {
-            if (data.deletedCount > 0) {
-              const remaining = info.filter(data => data._id !== id)
-              setInfo(remaining)
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Deleted Successfully"
-                });
+      .then(res => res.json())
+      .then(data => {
+        if (data.deletedCount > 0) {
+          const remaining = info.filter(data => data._id !== id)
+          setInfo(remaining)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
             }
-        })
-        .catch(err => console.log(err))
-}
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Deleted Successfully"
+          });
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
   const handleAdd = () => {
     navigate('./portfolio/add')
   }
   return (
     <div>
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 md:grid-cols-2 ">
+      <div className="flex lg:grid grid-cols-3 flex-wrap justify-center gap-8 ">
         {
-          info && info.map(data => <Cart 
-            key={data._id} 
-            data={data} 
+          info && info.map(data => <Cart
+            key={data._id}
+            data={data}
             handleDelete={handleDelete}
-            ></Cart>)
+          ></Cart>)
         }
       </div>
       <div className="text-end pt-8 ">

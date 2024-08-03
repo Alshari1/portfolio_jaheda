@@ -1,14 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faSuitcase, faBoxesStacked, faUserGroup, faUser, faCartShopping, faImage, faIdCardClip } from '@fortawesome/free-solid-svg-icons';
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { faHouse, faSuitcase, faBoxesStacked, faUserGroup, faUser, faCartShopping, faImage, faIdCardClip } from '@fortawesome/free-solid-svg-icons';
 import './SideNav.css'
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { AuthContext } from "../Providres/AuthProviders";
 const SideNav = ({ show }) => {
     const {setUser, user} = useContext(AuthContext)
-    console.log(user)
     const handleAdmin = async () => {
         try {
             const ipAPI = "https://api.ipify.org?format=json";

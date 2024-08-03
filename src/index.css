@@ -4,40 +4,124 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   font-family: "Poppins", sans-serif;
 }
 
+/* css for update and submit form */
 .customTextField .MuiOutlinedInput-root {
-  color: white !important; /* text color */
-  border-color: white !important; /* border color */
+  color: white !important;
+  /* text color */
+  border-color: white !important;
+  /* border color */
 }
 
 .customTextField .MuiOutlinedInput-root fieldset {
-  border-color: white !important; /* default border color */
+  border-color: white !important;
+  /* default border color */
 }
 
 .customTextField .MuiOutlinedInput-root:hover fieldset {
-  border-color: white !important; /* border color on hover */
+  border-color: white !important;
+  /* border color on hover */
 }
 
 .customTextField .MuiOutlinedInput-root.Mui-focused fieldset {
-  border-color: white !important; /* border color when focused */
+  border-color: white !important;
+  /* border color when focused */
 }
 
 .customTextField .MuiInputLabel-root {
-  color: white !important; /* label color */
+  color: white !important;
+  /* label color */
 }
 
 .customTextField .MuiInputBase-input {
-  color: white !important; /* input text color */
+  color: white !important;
+  /* input text color */
 }
-.title .MuiOutlinedInput-root{
+
+.title .MuiOutlinedInput-root {
   height: 100px;
 }
+
 .description .MuiOutlinedInput-root {
-  height: 150px; /* Set the desired height */
+  height: 150px;
+  /* Set the desired height */
 }
- /* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+
+/* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   height: 3em !important;
 } */
+
+
+/* ******* css for tabs *********** */
+.custom-box {
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto; /* Center align */
+}
+.custom-appbar {
+  background-color: inherit !important;
+  box-shadow: 0 0 2px solid gainsboro !important;
+  /* margin: 10px 0; */
+  /* border: 2px solid red !important; */
+}
+
+.custom-tab-indicator .MuiTabs-indicator {
+  background-color: wheat !important;
+  /* margin-top: 10px !important; */
+  /* padding-top: 10px !important; */
+}
+
+/* resume skills */
+.skills-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skills-container div{
+width: fit-content;
+border: 1px solid #047857;
+border-radius: 12px;
+padding: 8px;
+
+}
+
+/* **************** */
+/* Container holding the card */
+.card-container {
+  perspective: 1000px; /* Allows for 3D effect */
+}
+
+/* Basic styles for the card */
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+/* When the card is flipped, rotate it */
+.card-container.flipped .card {
+  /* transform: rotateY(180deg); */
+}
+
+/* Styling for the front and back of the card */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hide the back when facing front */
+}
+/* Back side styles */
+.card-back {
+  background-color: #b0c4de;
+  transform: rotateY(180deg); 
+} 
+/* Start rotated so it appears on back */
