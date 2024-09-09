@@ -3,12 +3,22 @@ a {
   gap: 1.5rem;
   width: 40%;
   margin: auto;
+  color: white;
+  /* font-family:"Lato"; */
+  margin: 0 auto;
+  font-weight:500 ;
 }
-
+a:hover{
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
+  color: #fec544;
+}
 a span {
   width: 10px;
 }
-
+.nav-container{
+  z-index:100;
+}
 
 @media screen and (max-width:1024px) {
 

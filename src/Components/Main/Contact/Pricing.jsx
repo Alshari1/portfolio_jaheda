@@ -1,11 +1,10 @@
-import { Card } from "flowbite-react";
+// import { Card } from "flowbite-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck, faEnvelope, faPhone, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import {  faEnvelope, faPhone, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { FaLinkedin } from "react-icons/fa";
-import fiverricon from '../../../assets/10813996_fiverr_icon.svg';
+import fivericon from '../../../assets/10813996_fiverr_icon.svg';
 import upworkIcon from '../../../assets/1929180_upwork_icon.svg'
-import { Link } from "react-router-dom";
 
 const Pricing = () => {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -17,8 +16,9 @@ const Pricing = () => {
         >
             <div className="card">
                 <div className="card-front">
-                    <div className="space-y-5 border p-6 rounded-lg">
-                        <h1 className="mb-3 text-3xl font-medium text-gray-500 dark:text-gray-400">Contact info</h1>
+                    <div className="space-y-5 border border-[#2b3744] h-[693px] p-6 rounded-lg text-justify text-white">
+                        <h1 className="mb-3 text-3xl font-medium dark:text-gray-400">Contact info</h1>
+                        <p><span className="text-3xl text-[#fec544]">Greetings</span>, I'm a Professional Front-end Developer and CMS(Wix, WordPress, Shopify, Squarespace) Expert. I can configuration, make, upgrade, Customize, deal with different kinds of websites by Cms or custom coding. I have done numerous activities with incredible accomplishments. Customer Satisfaction is the principal thing for me.</p>
                         <p className="text-justify">We'd love to hear from you! Whether you have questions, feedback, or need assistance, our team is here to help. You can reach us through the following methods :</p>
                         <div className="flex flex-row items-center gap-5" >
                             <div className=" p-2 text-2xl">
@@ -50,21 +50,21 @@ const Pricing = () => {
                         <p>Visite my social profile and get connected -</p>
                         <div>
                             <div className="flex justify-around lg:px-28">
-                                <div className="text-3xl p-3 rounded-lg shadow-custom bg-slate-900 w-fit">
+                                <div className="text-3xl p-3 rounded-lg border border-[#2b3744] bg-slate-900 w-fit">
                                     <FaLinkedin />
                                 </div>
-                                <div className="text-4xl p-3 rounded-lg shadow-custom bg-slate-900 w-fit">
-                                    <img className="bg-slate-400 h-7 rounded" src={fiverricon} alt="" />
+                                <div className="text-4xl p-3 rounded-lg border border-[#2b3744] bg-slate-900 w-fit">
+                                    <img className=" bg-white h-7 rounded" src={fivericon} alt="" />
                                 </div>
-                                <div className="text-4xl p-3 rounded-lg shadow-custom bg-slate-900 w-fit">
-                                    <img className="bg-slate-400 h-7 rounded" src={upworkIcon} alt="" />
+                                <div className="text-4xl p-3 rounded-lg border border-[#2b3744] bg-slate-900 w-fit">
+                                    <img className="bg-white h-7 rounded" src={upworkIcon} alt="" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="card-back">
-                    <Card style={{ height: '545px' }} className='w-full'>
+                    {/* <Card style={{ height: '545px' }} className='w-full'>
                         <h5 className="mb-3 text-3xl font-medium text-gray-500 dark:text-gray-400">Standard plan</h5>
                         <div className="flex items-baseline text-gray-900 dark:text-white">
                             <span className="text-3xl font-semibold">$</span>
@@ -142,7 +142,7 @@ const Pricing = () => {
                                 </li>
                             </ul>
                         </div>
-                    </Card>
+                    </Card> */}
                 </div>
             </div>
         </div>

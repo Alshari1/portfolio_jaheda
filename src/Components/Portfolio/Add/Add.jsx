@@ -24,7 +24,8 @@ const Add = ({ value, singleData }) => {
         const data = { thumbnailUrl, portfolioUrl, title, description, priceFrom, priceTo, industries, durationFrom, durationTo, date, heartCount }
         // console.log(data)
 
-        fetch('http://localhost:5000/portfolio', {
+        fetch('https://portfolio-jaheda.web.app/portfolio', {
+            credentials: 'include',
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -106,7 +107,8 @@ const Add = ({ value, singleData }) => {
         const date = moment(new Date()).format("MMM Do YY");
         const data = { thumbnailUrl, portfolioUrl, title, description, priceFrom, priceTo, industries, durationFrom, durationTo, date }
         // console.log(data)
-        fetch(`http://localhost:5000/portfolio/${id}`, {
+        fetch(`https://portfolio-jaheda.web.app/portfolio/${id}`, {
+            credentials: 'include',
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -115,6 +117,25 @@ const Add = ({ value, singleData }) => {
         })
             .then(res => res.json())
             .then(data => {
+                if(data.matchedCount > 0) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "warning",
+                        title: "Nothing Changed"
+                    });
+                    localStorage.removeItem('updated-cart')
+                    navigate('/')
+                }
                 if (data.modifiedCount > 0) {
                     const Toast = Swal.mixin({
                         toast: true,
@@ -135,16 +156,13 @@ const Add = ({ value, singleData }) => {
                     navigate('/')
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {})
 
     }
     return (
         <div>
             <div>
-            </div>
-            <div>
-
-                <form onSubmit={value === 'Submit' ? handleSubmit : handleUpdate} className="w-3/5 m-auto border space-y-8 p-6 rounded-lg">
+                <form onSubmit={value === 'Submit' ? handleSubmit : handleUpdate} className=" w-full lg:w-3/5 md:3/5 m-auto border border-[#2b3744] space-y-8 p-6 rounded-lg">
                     <div className="flex gap-2">
                         <TextField
                             id="outlined-basic"
@@ -154,6 +172,7 @@ const Add = ({ value, singleData }) => {
                             label="Thumbnail_Url"
                             autoFocus
                             multiline
+                            rows={2}
                         />
                         <TextField
                             required
@@ -163,6 +182,7 @@ const Add = ({ value, singleData }) => {
                             value={singleData?.portfolioUrl}
                             autoFocus
                             multiline
+                            rows={2}
                         />
                     </div>
                     <TextField

@@ -1,80 +1,124 @@
-import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { faHouse, faSuitcase, faBoxesStacked, faUserGroup, faUser, faCartShopping, faImage, faIdCardClip } from '@fortawesome/free-solid-svg-icons';
-import './SideNav.css'
-import Swal from "sweetalert2";
-import { useContext } from "react";
+import { faHouse, faSuitcase, faBoxesStacked, faUserGroup, faUser, faCartShopping, faIdCardClip, faCarOn, faRightFromBracket, faXmark, faCrown } from '@fortawesome/free-solid-svg-icons';
+import './SideNav.css';
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Providres/AuthProviders";
-const SideNav = ({ show }) => {
-    const {setUser, user} = useContext(AuthContext)
-    const handleAdmin = async () => {
-        try {
-            const ipAPI = "https://api.ipify.org?format=json";
-            const response = await fetch(ipAPI);
-            const data = await response.json();
-            const inputValue = data.ip;
-    
-            const result = await Swal.fire({
-                title: "Welcome Chef",
-                input: "text",
-                inputLabel: "",
-                inputValue,
-                showCancelButton: true,
-                cancelButtonColor: "#d33",
-                inputValidator: (value) => {
-                    if (!value) {
-                        return Swal.fire({
-                            icon: "error",
-                            title: "Unauthorized",
-                          });
-                    }
-                    if(value !== 'admin'){
-                        return Swal.fire({
-                            icon: "error",
-                            title: "Unauthorized",
-                          });
-                    }
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Swal from 'sweetalert2';
+
+const SideNav = ({ show, setShow }) => {
+    const { user, googleSignIn, logout } = useContext(AuthContext);
+    const [open, setOpen] = useState(false);
+    const [adminInput, setAdminInput] = useState('');
+// console.log( adminInput)
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        handleClose();
+
+        if (adminInput === import.meta.env.VITE_USER) {
+            googleSignIn()
+                .catch(error => {
+                    console.error("Google Sign-In Error:", error);
+                });
+        } else {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                customClass: {
+                    container: 'custom-toast-error',        
+                },
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
                 }
             });
-            if (result.value === 'admin') {
-                Swal.fire(`welcome chief`);
-                setUser('admin')
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            Swal.fire('An error occurred. Please try again later.');
+            
+            Toast.fire({
+                icon: "error",
+                title: "Unauthorized"
+            });
+            
+            
         }
     };
-    
-    return (
-        <div className={`nav-container lg:flex flex-col gap-6 ${show ? 'flex absolute lg:fixed lg:top-0 top-20 z-10 slide-in ' : 'hidden slide-out'}`}>
 
-            <NavLink to='/'><span><FontAwesomeIcon icon={faHouse} /></span>HOME</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faSuitcase} /></span>FEATURES</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faBoxesStacked} /></span>PORTFOLIO</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faUserGroup} /></span>RESUME</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faUser} /></span>CLIENTS</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faCartShopping} /></span>PRICING</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faImage} /></span>BLOG</NavLink>
-            <NavLink to='/'><span><FontAwesomeIcon icon={faIdCardClip} /></span>CONTACT</NavLink>
-            <span onClick={handleAdmin} className="text-end hover:cursor-pointer">διαχειριστής ?</span>
-            <hr />
-            <div className="text-center flex flex-col justify-center items-center gap-8">
-                <h1 className="text-sm tracking-wide">FIND WITH ME</h1>
-                <div className="icon-container flex gap-5">
-                    <div className="text-3xl p-3 rounded-lg shadow-custom bg-slate-900">
-                        <FaFacebook />
-                    </div>
-                    <div className="text-3xl p-3 rounded-lg shadow-custom bg-slate-900">
-                        <FaInstagram />
-                    </div>
-                    <div className="text-3xl p-3 rounded-lg shadow-custom bg-slate-900">
-                        <FaLinkedin />
-                    </div>
-                </div>
+    const handleLogout = () => {
+        logout();
+        setAdminInput('')
+    };
+
+    const handleCloseBar = () => {
+        setShow(false);
+    };
+
+    return (
+        <>
+            <React.Fragment>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <form onSubmit={handleSubmit}>
+                        <DialogTitle>Admin Login</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Please enter the admin code to access the admin features.
+                            </DialogContentText>
+                            <TextField
+                                autoFocus
+                                required
+                                margin="dense"
+                                id="name"
+                                name="text"
+                                label="Admin Code"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                value={adminInput}
+                                autoComplete='off'
+                                onChange={(e) => setAdminInput(e.target.value)}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button type="submit">Submit</Button>
+                        </DialogActions>
+                    </form>
+                </Dialog>
+            </React.Fragment>
+            <div className={`nav-container flex flex-col justify-center border border-[#2b3744] bg-slate-900 w-[282px] h-[100vh] lg:w-full overflow-x-hidden overflow-y-auto lg:flex  gap-8 ${show ? 'flex absolute lg:fixed lg:top-0 slide-in' : 'hidden slide-out'}`}>
+                {
+                    show && <span className="text-end pr-5 hover:cursor-pointer"><FontAwesomeIcon onClick={handleCloseBar} className="lg:hidden" icon={faXmark} /></span>
+                }
+                <a href='#banner'><span><FontAwesomeIcon icon={faHouse} /></span>HOME</a>
+                <a href='#features'><span><FontAwesomeIcon icon={faSuitcase} /></span>FEATURES</a>
+                <a href='#portfolio'><span><FontAwesomeIcon icon={faBoxesStacked} /></span>PORTFOLIO</a>
+                <a href='#resume'><span><FontAwesomeIcon icon={faUserGroup} /></span>RESUME</a>
+                <a href='/'><span><FontAwesomeIcon icon={faUser} /></span>CLIENTS</a>
+                <a href='/'><span><FontAwesomeIcon icon={faCartShopping} /></span>PRICING</a>
+                <a href='#contact'><span><FontAwesomeIcon icon={faIdCardClip} /></span>CONTACT</a>
+                {
+                    user && <a href="/inventory"><FontAwesomeIcon icon={faCarOn} />Inventory</a>
+                }
+                {
+                    !user ? <a onClick={() => setOpen(true)}><span><FontAwesomeIcon icon={faCrown} /></span>ADMIN ?</a> : <span onClick={handleLogout} className="text-end pr-5 hover:cursor-pointer lg:pr-10"><FontAwesomeIcon onClick={handleLogout} icon={faRightFromBracket} /></span>
+                }
             </div>
-        </div>
+        </>
     );
 };
 

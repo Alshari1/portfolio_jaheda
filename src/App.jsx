@@ -11,13 +11,14 @@ function App() {
 
   return (
     <div className='flex gap-2'>
-      <div className='sticky bottom-0 lg:w-1/5'>
-      <SideNav
-        show={show}
-      ></SideNav>
+      <div className='lg:w-1/5'>
+        <SideNav
+          show={show}
+          setShow={setShow}
+        ></SideNav>
       </div>
-      <div style={{height:'100vh'}} className='lg:w-4/5 overflow-scroll overflow-x-hidden'>
-      <Main handleSideNav={handleSideNav}></Main>
+      <div style={{ height: '100vh' }} className='lg:w-4/5 overflow-scroll overflow-x-hidden bg-gray-900'>
+        <Main handleSideNav={handleSideNav}></Main>
       </div>
     </div>
   )

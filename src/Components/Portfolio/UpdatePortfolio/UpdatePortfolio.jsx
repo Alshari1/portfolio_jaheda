@@ -5,7 +5,7 @@ const UpdatePortfolio = () => {
     const [singleData, setSingleData] = useState({})
     const id = localStorage.getItem('updated-cart')
     useEffect(() => {
-        fetch(`http://localhost:5000/portfolio/${id}`)
+        fetch(`https://portfolio-jaheda.web.app/portfolio/${id}`)
             .then(res => res.json())
             .then(data => setSingleData(data))
     }, [id])

@@ -4,6 +4,7 @@ import PortfolioDetails from "../Components/Portfolio/PortfolioDetails/Portfolio
 import Add from "../Components/Portfolio/Add/Add";
 import UpdatePortfolio from "../Components/Portfolio/UpdatePortfolio/UpdatePortfolio";
 import Inventory from "../Components/Inventory/Inventory";
+import NotFound from "../Components/NotFound/NotFound";
 
 export  const router = createBrowserRouter([
    {
@@ -25,6 +26,10 @@ export  const router = createBrowserRouter([
    {
       path:'/inventory',
       element:<Inventory></Inventory>,
-      loader:() => fetch('http://localhost:5000/clients')
+      loader:() => fetch('https://portfolio-jaheda.web.app/clients')
+   },
+   {
+      path:'/error',
+      element:<NotFound></NotFound>
    }
 ])

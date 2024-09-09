@@ -15,8 +15,8 @@ const Cart = ({ data, handleDelete }) => {
 
     const handleLove = (id) => {
         const updatedText = document.getElementById(_id).innerText;
-        console.log(heartCount, _id)
-        fetch(`http://localhost:5000/portfolio/${id}`, {
+        // console.log(heartCount, _id)
+        fetch(`https://portfolio-jaheda.web.app/portfolio/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
@@ -32,7 +32,7 @@ const Cart = ({ data, handleDelete }) => {
                     btn.classList.add('red')
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {})
 
     }
     const handleUpdate = id => {
@@ -46,7 +46,7 @@ const Cart = ({ data, handleDelete }) => {
 
 
     return (
-        <div style={{ width: '19rem' }} className=" flex flex-col flex-wrap space-y-5 bg-base-100 shadow-xl border rounded-lg pb-3">
+        <div style={{ width: '21rem' }} className="relative flex flex-col flex-wrap space-y-5 bg-[#151b2b] shadow-xl border border-[#232935] rounded-lg pb-3 text-white">
             <figure className="p-5 ">
                 <img className=" rounded-lg max-h-56 w-full" src={thumbnailUrl} alt="image" />
             </figure>
@@ -54,9 +54,11 @@ const Cart = ({ data, handleDelete }) => {
                 <p>DEVELOPMENT</p>
                 <p><button id={_id + 1} className="hover:cursor-pointer" onClick={() => handleLove(_id)}><FontAwesomeIcon icon={faHeart} /></button> <span id={_id}>{num}</span></p>
             </div>
-            <h2 className="text-2xl font-semibold mx-2">{title}</h2>
-            <small className={`w-full h-10 px-2 ${description.length > 50 && 'overflow-hidden'}`}>{description}</small>
-            {user !== 'admin' ? <div className="flex justify-between px-4">
+            <div style={{width:'95%'}} className="h-16 overflow-hidden mx-auto space-y-2">
+                <h2 className="text-2xl font-semibold">{title}</h2>
+                <p>{description}</p>
+            </div>
+            {user  ? <div className="flex justify-between px-4">
                 <FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleViewDetails(_id)} icon={faEye} />
                 <FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleUpdate(_id)} icon={faPenFancy} />
                 <FontAwesomeIcon className="hover:cursor-pointer" onClick={() => handleDelete(_id)} icon={faTrash} />
